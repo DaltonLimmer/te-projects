@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Capstone.Web.DAL;
+using Capstone.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,10 +11,26 @@ namespace Capstone.Web.Controllers
     public class HomeController : Controller
     {
 
+        private INationalParkDAL _dal;
+
+        public HomeController(INationalParkDAL dal)
+        {
+            _dal = dal;
+        }
+
         // GET: Home
         public ActionResult Index()
         {
             return View("Index");
+        }
+
+        public ActionResult Detail(string parkCode)
+        {
+            parkCode = "ENP";
+
+            NationalPark detailPark = _dal.GetOnePark(parkCode);
+
+            return View("Detail", detailPark);
         }
     }
 }

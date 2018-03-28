@@ -23,7 +23,19 @@ namespace Capstone.Web.DAL
 
         public NationalPark GetOnePark(string parkCode)
         {
-            throw new NotImplementedException();
+            NationalPark onePark = new NationalPark();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(_singleParkSQLString, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    onePark = MapRowToPark(reader);
+                }
+
+            }
+            return onePark;
         }
 
         private NationalPark MapRowToPark(SqlDataReader reader)
@@ -35,7 +47,7 @@ namespace Capstone.Web.DAL
                 State = Convert.ToString(reader["state"]),
                 Acreage = Convert.ToInt32(reader["acreage"]),
                 Elevation = Convert.ToInt32(reader["elevationInFeet"]),
-                MilesOfTrail = Convert.ToInt32(reader["milesOfTrail"]),
+                MilesOfTrail = Convert.ToDouble(reader["milesOfTrail"]),
                 NumberOfCampsites = Convert.ToInt32(reader["numberOfCampsites"]),
                 Climate = Convert.ToString(reader["climate"]),
                 YearFounded = Convert.ToInt32(reader["yearFounded"]),
@@ -45,8 +57,17 @@ namespace Capstone.Web.DAL
                 ParkDescription = Convert.ToString(reader["parkDescription"]),
                 EntryFee = Convert.ToInt32(reader["entryFee"]),
                 NumberOfAnimalSpecies = Convert.ToInt32(reader["numberOfAnimalSpecies"]),
-                SurveyCount = Convert.ToInt32(reader["surveyCount"])
             };
         }
+
+        private string _singleParkSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
+            "park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
+            " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode," +
+            " park.parkDescription, park.parkName, park.state, park.yearFounded, SUM(survey_result.surveyId)" +
+            " AS surveyCount from park FULL OUTER JOIN survey_result on park.parkCode = survey_result.parkCode" +
+            " WHERE park.parkCode = 'ENP' Group by park.acreage, park.annualVisitorCount, park.climate," +
+            " park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
+            " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
+            " park.parkName, park.state, park.yearFounded";
     }
 }

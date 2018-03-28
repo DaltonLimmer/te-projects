@@ -1,6 +1,7 @@
 ﻿using Capstone.Web.DAL;
 using Ninject;
 using Ninject.Web.Common;
+using Ninject.Web.Common.WebHost;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
