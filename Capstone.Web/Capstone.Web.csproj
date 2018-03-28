@@ -109,6 +109,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\cvnp.jpg" />
+    <Content Include="Content\enp.jpg" />
+    <Content Include="Content\gcnp.jpg" />
+    <Content Include="Content\gnp.jpg" />
+    <Content Include="Content\gsmnp.jpg" />
+    <Content Include="Content\gtnp.jpg" />
+    <Content Include="Content\mrnp.jpg" />
+    <Content Include="Content\rmnp.jpg" />
+    <Content Include="Content\ynp.jpg" />
+    <Content Include="Content\ynp2.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
