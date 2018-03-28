@@ -12,6 +12,7 @@ namespace Capstone.Web.Controllers
     {
 
         private INationalParkDAL _dal;
+
         public HomeController(INationalParkDAL dal)
         {
             _dal = dal;
@@ -31,5 +32,13 @@ namespace Capstone.Web.Controllers
         }
 
 
+        public ActionResult Detail(string parkCode)
+        {
+            parkCode = "ENP";
+
+            NationalPark detailPark = _dal.GetOnePark(parkCode);
+
+            return View("Detail", detailPark);
+        }
     }
 }

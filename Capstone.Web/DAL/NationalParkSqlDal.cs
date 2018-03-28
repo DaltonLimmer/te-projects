@@ -19,14 +19,7 @@ namespace Capstone.Web.DAL
         public List<NationalPark> GetAllParks()
         {
             List<NationalPark> nationalParks = new List<NationalPark>();
-            string SQL_GetAllParks = @"Select park.acreage, park.annualVisitorCount, park.climate, park.elevationInFeet, 
-            park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource, park.milesOfTrail, park.numberOfAnimalSpecies, 
-            park.numberOfCampsites, park.parkCode, park.parkDescription, park.parkName, park.state, park.yearFounded, 
-            SUM(survey_result.surveyId) AS surveyCount from park FULL OUTER JOIN survey_result 
-            on park.parkCode = survey_result.parkCode Group by park.acreage, park.annualVisitorCount, park.climate, 
-            park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource, 
-            park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription, 
-            park.parkName, park.state, park.yearFounded";
+            string SQL_GetAllParks = _GetAllParksSQLString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -47,7 +40,19 @@ namespace Capstone.Web.DAL
 
         public NationalPark GetOnePark(string parkCode)
         {
-            throw new NotImplementedException();
+            NationalPark onePark = new NationalPark();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(_singleParkSQLString, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    onePark = MapRowToPark(reader);
+                }
+
+            }
+            return onePark;
         }
 
         private NationalPark MapRowToPark(SqlDataReader reader)
@@ -71,5 +76,25 @@ namespace Capstone.Web.DAL
                 NumberOfAnimalSpecies = Convert.ToInt32(reader["numberOfAnimalSpecies"])
             };
         }
+
+        private string _singleParkSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
+            "park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
+            " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode," +
+            " park.parkDescription, park.parkName, park.state, park.yearFounded, SUM(survey_result.surveyId)" +
+            " AS surveyCount from park FULL OUTER JOIN survey_result on park.parkCode = survey_result.parkCode" +
+            " WHERE park.parkCode = 'ENP' Group by park.acreage, park.annualVisitorCount, park.climate," +
+            " park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
+            " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
+            " park.parkName, park.state, park.yearFounded";
+
+        private string _GetAllParksSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
+            "park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
+            " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode," +
+            " park.parkDescription, park.parkName, park.state, park.yearFounded, SUM(survey_result.surveyId)" +
+            " AS surveyCount from park FULL OUTER JOIN survey_result on park.parkCode = survey_result.parkCode" +
+            " Group by park.acreage, park.annualVisitorCount, park.climate," +
+            " park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
+            " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
+            " park.parkName, park.state, park.yearFounded";
     }
 }
