@@ -18,7 +18,31 @@ namespace Capstone.Web.DAL
 
         public List<NationalPark> GetAllParks()
         {
-            throw new NotImplementedException();
+            List<NationalPark> nationalParks = new List<NationalPark>();
+            string SQL_GetAllParks = @"Select park.acreage, park.annualVisitorCount, park.climate, park.elevationInFeet, 
+            park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource, park.milesOfTrail, park.numberOfAnimalSpecies, 
+            park.numberOfCampsites, park.parkCode, park.parkDescription, park.parkName, park.state, park.yearFounded, 
+            SUM(survey_result.surveyId) AS surveyCount from park FULL OUTER JOIN survey_result 
+            on park.parkCode = survey_result.parkCode Group by park.acreage, park.annualVisitorCount, park.climate, 
+            park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource, 
+            park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription, 
+            park.parkName, park.state, park.yearFounded";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(SQL_GetAllParks, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    nationalParks.Add(MapRowToPark(reader));
+                }
+            }
+
+            return nationalParks;
         }
 
         public NationalPark GetOnePark(string parkCode)
@@ -35,7 +59,7 @@ namespace Capstone.Web.DAL
                 State = Convert.ToString(reader["state"]),
                 Acreage = Convert.ToInt32(reader["acreage"]),
                 Elevation = Convert.ToInt32(reader["elevationInFeet"]),
-                MilesOfTrail = Convert.ToInt32(reader["milesOfTrail"]),
+                MilesOfTrail = Convert.ToDouble(reader["milesOfTrail"]),
                 NumberOfCampsites = Convert.ToInt32(reader["numberOfCampsites"]),
                 Climate = Convert.ToString(reader["climate"]),
                 YearFounded = Convert.ToInt32(reader["yearFounded"]),
@@ -44,8 +68,7 @@ namespace Capstone.Web.DAL
                 InspirationalQuoteSource = Convert.ToString(reader["inspirationalQuoteSource"]),
                 ParkDescription = Convert.ToString(reader["parkDescription"]),
                 EntryFee = Convert.ToInt32(reader["entryFee"]),
-                NumberOfAnimalSpecies = Convert.ToInt32(reader["numberOfAnimalSpecies"]),
-                SurveyCount = Convert.ToInt32(reader["surveyCount"])
+                NumberOfAnimalSpecies = Convert.ToInt32(reader["numberOfAnimalSpecies"])
             };
         }
     }

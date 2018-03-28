@@ -1,0 +1,30 @@
+﻿@using Capstone.Web.Models;
+@model List<NationalPark>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    @foreach (NationalPark park in Model)
+    {
+        <div style="height: 400px; padding: 15px">
+            <img style="float: left; padding-right: 25px" src="~/Content/@(park.ParkCode).jpg" alt="Park Image" />
+            <table style="width: 55%; float: left">
+                <tr>
+                    <td style="padding: 15px 0px 25px 0px; font-weight: bold">@park.ParkName</td>
+                </tr>
+                <tr>
+                    <td style="padding-bottom: 10px">Entry Fee: @park.EntryFee.ToString("C")</td>
+                </tr>
+                <tr>
+                    <td>@park.ParkDescription</td>
+                </tr>
+            </table>
+        </div>
+    }
+</body>
+</html>
