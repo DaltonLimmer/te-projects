@@ -9,6 +9,13 @@ namespace Capstone.Web.DAL
 {
     public class NationalParkSqlDal : INationalParkDAL
     {
+        private string connectionString;
+
+        public NationalParkSqlDal(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
         public List<NationalPark> GetAllParks()
         {
             throw new NotImplementedException();
