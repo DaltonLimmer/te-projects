@@ -19,13 +19,12 @@ namespace Capstone.Web.DAL
         public List<NationalPark> GetAllParks()
         {
             List<NationalPark> nationalParks = new List<NationalPark>();
-            string SQL_GetAllParks = _GetAllParksSQLString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(SQL_GetAllParks, conn);
+                SqlCommand cmd = new SqlCommand(_GetAllParksSQLString, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -41,10 +40,12 @@ namespace Capstone.Web.DAL
         public NationalPark GetOnePark(string parkCode)
         {
             NationalPark onePark = new NationalPark();
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(_singleParkSQLString, conn);
+                cmd.Parameters.AddWithValue("@parkCode", parkCode);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -77,12 +78,46 @@ namespace Capstone.Web.DAL
             };
         }
 
+        private WeatherReport MapRowToWeatherReport(SqlDataReader reader)
+        {
+            return new WeatherReport
+            {
+                ParkCode = Convert.ToString(reader["parkCode"]),
+                FiveDayForecastValue = Convert.ToInt32(reader["fiveDayForecastValue"]),
+                High = Convert.ToInt32(reader["high"]),
+                Low = Convert.ToInt32(reader["low"]),
+                Forecast = Convert.ToString(reader["forecast"])
+
+            };
+        }
+
+        public List<WeatherReport> GetWeatherReports(string parkCode)
+        {
+            List<WeatherReport> weatherReports = new List<WeatherReport>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(_GetAllWeatherReportsSQLString, conn);
+                cmd.Parameters.AddWithValue("@parkCode", parkCode);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    weatherReports.Add(MapRowToWeatherReport(reader));
+                }
+            }
+
+            return weatherReports;
+        }
+
         private string _singleParkSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
             "park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode," +
             " park.parkDescription, park.parkName, park.state, park.yearFounded, SUM(survey_result.surveyId)" +
             " AS surveyCount from park FULL OUTER JOIN survey_result on park.parkCode = survey_result.parkCode" +
-            " WHERE park.parkCode = 'ENP' Group by park.acreage, park.annualVisitorCount, park.climate," +
+            " WHERE park.parkCode = @parkCode Group by park.acreage, park.annualVisitorCount, park.climate," +
             " park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
             " park.parkName, park.state, park.yearFounded";
@@ -96,5 +131,7 @@ namespace Capstone.Web.DAL
             " park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
             " park.parkName, park.state, park.yearFounded";
+
+        private string _GetAllWeatherReportsSQLString = "Select * from weather where parkCode = @parkCode";
     }
 }

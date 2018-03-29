@@ -12,5 +12,7 @@ namespace Capstone.Web.DAL
 
         NationalPark GetOnePark(string parkCode);
 
+        List<WeatherReport> GetWeatherReports(string parkCode);
+
     }
 }

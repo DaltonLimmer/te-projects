@@ -34,11 +34,15 @@ namespace Capstone.Web.Controllers
 
         public ActionResult Detail(string parkCode)
         {
-            parkCode = "ENP";
+            List<WeatherReport> weatherReports = _dal.GetWeatherReports(parkCode);
+            NationalPark park = _dal.GetOnePark(parkCode);
+            DetailModel model = new DetailModel
+            {
+                NationalPark = park,
+                WeatherReports = weatherReports
+            };
 
-            NationalPark detailPark = _dal.GetOnePark(parkCode);
-
-            return View("Detail", detailPark);
+            return View("Detail", model);
         }
     }
 }

@@ -1,0 +1,35 @@
+﻿body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.centerText {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+header {
+    background-color: lightgrey;
+    padding: 0px;
+}
+
+li {
+    text-decoration: none !important;
+
+}
+
+#quoteBlock {
+    font-family: Georgia;
+    display: table;
+    width: 80%;
+    background-color: tan;
+    color: sienna;
+    text-align: center;
+    align-content: center;
+    border-style: groove;
+    border-color: saddlebrown;
+    border-radius: 25px;
+    margin: 0 auto;
+}
