@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+@using Capstone.Web.Models
+@model SurveyModel
+
+    <div>
+    <form method="post" action="@Url.Action("FavoriteParks", "Home")">
+        Which park did you most enjoy?: @Html.DropDownListFor(m => m.ParkName, Model.PossibleParks)<br />
+        Email Address: @Html.EditorFor(m => m.Email, new { required = "required" })<br />
+        What is your state of residence?: @Html.DropDownListFor(m => m.StateOfResidence, Model.PossibleStateOfResidence)<br />
+        What is your activity level?: @Html.DropDownListFor(m => m.ActivityLevel, Model.PossibleActivityLevel)<br />
+        <input type="hidden" name="survey" value="@Model" />
+        <input type="submit" />
+    </form>
+    
+
+    </div>
+

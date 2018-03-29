@@ -21,7 +21,9 @@ namespace Capstone.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View("Index");
+            List<NationalPark> parks = _dal.GetAllParks();
+
+            return View("ParkList", parks);
         }
 
         public ActionResult ParkList()
@@ -43,6 +45,30 @@ namespace Capstone.Web.Controllers
             };
 
             return View("Detail", model);
+        }
+
+        public ActionResult Survey()
+        {
+            SurveyModel model = new SurveyModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult FavoriteParks(SurveyModel model)
+        {
+            _dal.AddSurvey(model);
+
+            List<SurveyPark> surveyParks = _dal.GetSurveyParks();
+
+            TempData["surveys"] = surveyParks;
+
+            return RedirectToAction("FavoriteParks");
+        }
+
+        public ActionResult FavoriteParks()
+        {
+            List<SurveyPark> surveyParks = TempData["surveys"] as List<SurveyPark>;
+            return View("FavoriteParks", surveyParks);
         }
     }
 }

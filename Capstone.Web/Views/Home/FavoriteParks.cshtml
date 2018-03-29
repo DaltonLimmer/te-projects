@@ -1,0 +1,21 @@
+﻿@using Capstone.Web.Models
+@model List<SurveyPark>
+
+    @foreach(SurveyPark park in Model)
+    {
+        <div>
+            <div style= "width: 10%">
+        <img style ="float:left; border-radius: 25px;" src="~/Content/@(park.ParkCode).jpg" />
+                </div>
+            <div style="width: 80%;">
+        <table>
+            <tr>
+                <td>@park.ParkName</td>
+            </tr>
+            <tr>
+                <td>Total Surveys: @park.TotalSurveys</td>
+            </tr>
+        </table>
+                </div>
+        </div> <br />
+    }
