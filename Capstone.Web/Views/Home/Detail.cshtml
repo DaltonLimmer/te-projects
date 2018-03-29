@@ -23,7 +23,7 @@
             <td>Year Founded: @Model.NationalPark.YearFounded</td>
         </tr>
         <tr>
-            <td>Annual Visitor Count: @Model.NationalPark.AnnualVisitorCount</td>
+            <td>Annual Visitor Count: @Model.NationalPark.AnnualVisitorCount people</td>
         </tr>
         <tr>
             <td>Climate: @Model.NationalPark.Climate</td>
@@ -44,10 +44,44 @@
             <td>Number of Animal Species: @Model.NationalPark.NumberOfAnimalSpecies</td>
         </tr>
     </table>
+    <br />
+    <br />
+    <h3 style="text-align: center">Five Day Forecast</h3>
+    <hr style="width:85%"/>
 
-    @foreach(WeatherReport report in Model.WeatherReports)
+    @foreach (WeatherReport report in Model.WeatherReports)
     {
-        @report.High
+        if (report.FiveDayForecastValue == 1)
+        {
+            <div style="width: 25%; float: left">
+                <p>Today</p>
+                @if(report.Forecast.Contains(" "))
+                {
+                    <img src="~/Content/Weather/@(report.Forecast.Replace(" ", "")).png" />
+                }
+                else
+                {
+                    <img src="~/Content/Weather/@(report.Forecast).png" />
+                }
+                <p>High: @report.High F  Low: @report.Low F</p>
+                <p>@Model.AdvisoryMessage(report)</p>
+            </div>
+        }
+        if (report.FiveDayForecastValue != 1)
+        {
+            <div style="width: 18%; display: inline-block; float: left">
+                @if(report.Forecast.Contains(" "))
+                {
+                    <img style="width: 60%" src="~/Content/Weather/@(report.Forecast.Replace(" ", "")).png" />
+                }
+                else
+                {
+                    <img style="width: 60%" src="~/Content/Weather/@(report.Forecast).png" />
+                }
+                <p>High: @report.High F</p>
+                <p>Low: @report.Low F</p>
+            </div>
+        }
     }
 
 </div>
