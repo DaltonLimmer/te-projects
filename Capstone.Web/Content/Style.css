@@ -33,3 +33,20 @@ li {
     border-radius: 25px;
     margin: 0 auto;
 }
+
+.oddSurveyDiv {
+    padding-top: 1px;
+    background-color: grey;
+    height: 160px;
+    display: inline-block;
+    width: 100%;
+    margin: -10px;
+}
+.evenSurveyDiv {
+    margin: -10px;
+    padding-top: 1px;
+    width: 100%;
+    display: inline-block;
+    background-color: forestgreen;
+    height: 160px;
+}

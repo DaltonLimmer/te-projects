@@ -1,21 +1,35 @@
 ﻿@using Capstone.Web.Models
 @model List<SurveyPark>
 
-    @foreach(SurveyPark park in Model)
+@for (int i = 1; i < Model.Count; i++)
+{
+    if (i % 2 != 0)
     {
-        <div>
-            <div style= "width: 10%">
-        <img style ="float:left; border-radius: 25px;" src="~/Content/@(park.ParkCode).jpg" />
-                </div>
-            <div style="width: 80%;">
-        <table>
-            <tr>
-                <td>@park.ParkName</td>
-            </tr>
-            <tr>
-                <td>Total Surveys: @park.TotalSurveys</td>
-            </tr>
-        </table>
-                </div>
+        <div class="oddSurveyDiv">
+                <img style="border-radius: 10px; width: 20%;" src="~/Content/@(Model[i].ParkCode).jpg" />
+                <table style="float:right; padding-right: 50%">
+                    <tr>
+                        <td>@Model[i].ParkName</td>
+                    </tr>
+                    <tr>
+                        <td>Total Surveys: @Model[i].TotalSurveys</td>
+                    </tr>
+                </table>
+        </div><br />
+    }
+    
+    else
+    {
+        <div class="evenSurveyDiv">
+                <img style="border-radius: 10px; width: 20%" src="~/Content/@(Model[i].ParkCode).jpg" />
+                <table style="float:right; padding-right: 50%">
+                    <tr>
+                        <td>@Model[i].ParkName</td>
+                    </tr>
+                    <tr>
+                        <td>Total Surveys: @Model[i].TotalSurveys</td>
+                    </tr>
+                </table>
         </div> <br />
     }
+}
