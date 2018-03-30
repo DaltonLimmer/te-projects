@@ -17,29 +17,29 @@ namespace Capstone.Web.Models
 
             if(weatherReport.Forecast == "snow")
             {
-                message = "Pack snowshoes!";
+                message += "Pack snowshoes!";
             }
-            else if(weatherReport.Forecast == "rain")
+            if(weatherReport.Forecast == "rain")
             {
                 message = "Pack rain gear and waterproof shoes!";
             }
-            else if (weatherReport.Forecast == "thunderstorms")
+            if (weatherReport.Forecast == "thunderstorms")
             {
                 message = "Seek shelter! Avoid hiking on exposed ridges!";
             }
-            else if (weatherReport.Forecast == "sun")
+            if (weatherReport.Forecast == "sun")
             {
                 message = "Pack sunblock!";
             }
-            else if (weatherReport.High > 75)
+            if (weatherReport.high > 75)
             {
                 message = "Bring extra water!";
             }
-            else if ((weatherReport.High - weatherReport.Low) > 20)
+            if ((weatherReport.high - weatherReport.low) > 20)
             {
                 message = "Wear breathable layers!";
             }
-            else if (weatherReport.Low < 20)
+            if (weatherReport.low < 20)
             {
                 message = "Extended time spent in frigid temperatures is not advised!";
             }

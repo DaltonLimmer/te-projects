@@ -32,9 +32,14 @@ namespace Capstone.Web.Controllers
         }
 
 
-        public ActionResult Detail(string parkCode)
+        public ActionResult Detail(string parkCode, string tempType)
         {
-            List<WeatherReport> weatherReports = _dal.GetWeatherReports(parkCode);
+            if (parkCode == null)
+            {
+                parkCode = (string)TempData["parkCode"];
+            }
+
+            List<WeatherReport> weatherReports = _dal.GetWeatherReports(parkCode, tempType);
             NationalPark park = _dal.GetOnePark(parkCode);
             DetailModel model = new DetailModel
             {
@@ -44,5 +49,6 @@ namespace Capstone.Web.Controllers
 
             return View("Detail", model);
         }
+
     }
 }

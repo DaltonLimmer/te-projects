@@ -1,6 +1,10 @@
-﻿@using Capstone.Web.Models
-@model DetailModel
+﻿
 
+@using Capstone.Web.Models
+@model DetailModel
+@{
+    TempData["parkCode"] = Model.NationalPark.ParkCode;
+}
 <div class="centerText">
     <img style="border-radius: 25px;" src="~/Content/@(Model.NationalPark.ParkCode).jpg" />
     <h1>@Model.NationalPark.ParkName</h1>
@@ -47,30 +51,44 @@
     <br />
     <br />
     <h3 style="text-align: center">Five Day Forecast</h3>
-    <hr style="width:85%"/>
+    <hr style="width:85%" />
+    <form method="get" action="@Url.Action("Detail", "Home")">
+        <select name="tempType">
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="celsius">Celsius</option>
+        </select><input type="submit" />
+    </form>
 
     @foreach (WeatherReport report in Model.WeatherReports)
     {
+
         if (report.FiveDayForecastValue == 1)
         {
             <div style="width: 25%; float: left">
                 <p>Today</p>
-                @if(report.Forecast.Contains(" "))
-                {
-                    <img src="~/Content/Weather/@(report.Forecast.Replace(" ", "")).png" />
-                }
-                else
-                {
-                    <img src="~/Content/Weather/@(report.Forecast).png" />
-                }
-                <p>High: @report.High F  Low: @report.Low F</p>
-                <p>@Model.AdvisoryMessage(report)</p>
+                <div>
+                    @if (report.Forecast.Contains(" "))
+                    {
+                        <img src="~/Content/Weather/@(report.Forecast.Replace(" ", "")).png" />
+                    }
+                    else
+                    {
+                        <img src="~/Content/Weather/@(report.Forecast).png" />
+                    }
+                </div>
+                <div>
+                    <p>High: @report.High</p>
+                    <p>Low: @report.Low</p>
+                    <p>@Model.AdvisoryMessage(report)</p>
+                </div>
             </div>
         }
         if (report.FiveDayForecastValue != 1)
         {
             <div style="width: 18%; display: inline-block; float: left">
-                @if(report.Forecast.Contains(" "))
+                <br />
+                <p>@DateTime.Now.AddDays(report.FiveDayForecastValue - 1).DayOfWeek</p>
+                @if (report.Forecast.Contains(" "))
                 {
                     <img style="width: 60%" src="~/Content/Weather/@(report.Forecast.Replace(" ", "")).png" />
                 }
@@ -78,8 +96,8 @@
                 {
                     <img style="width: 60%" src="~/Content/Weather/@(report.Forecast).png" />
                 }
-                <p>High: @report.High F</p>
-                <p>Low: @report.Low F</p>
+                <p>High: @report.High</p>
+                <p>Low: @report.Low</p>
             </div>
         }
     }
