@@ -67,3 +67,7 @@ li {
     border-width: 2px;
     padding: 10px;
 }
+
+td, p {
+    font-size: 14px;
+}

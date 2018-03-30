@@ -24,7 +24,7 @@ namespace Capstone.Web.DAL
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(_GetAllParksSQLString, conn);
+                SqlCommand cmd = new SqlCommand(_getAllParksSQLString, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -54,6 +54,30 @@ namespace Capstone.Web.DAL
 
             }
             return onePark;
+        }
+
+        public bool CheckForSurvey(SurveyModel survey)
+        {
+            bool surveyExists = false;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(_checkForSurveySQLString, conn);
+
+                cmd.Parameters.AddWithValue("@parkName", survey.ParkName);
+                cmd.Parameters.AddWithValue("@emailAddress", survey.Email);
+
+                object result = cmd.ExecuteScalar();
+
+                if(result != null)
+                {
+                    surveyExists = true;
+                }
+
+                return surveyExists;
+            }
         }
 
         public void AddSurvey(SurveyModel survey)
@@ -154,7 +178,7 @@ namespace Capstone.Web.DAL
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(_GetAllWeatherReportsSQLString, conn);
+                SqlCommand cmd = new SqlCommand(_getAllWeatherReportsSQLString, conn);
                 cmd.Parameters.AddWithValue("@parkCode", parkCode);
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -186,7 +210,7 @@ namespace Capstone.Web.DAL
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
             " park.parkName, park.state, park.yearFounded";
 
-        private string _GetAllParksSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
+        private string _getAllParksSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
             "park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode," +
             " park.parkDescription, park.parkName, park.state, park.yearFounded, COUNT(survey_result.parkCode)" +
@@ -196,6 +220,10 @@ namespace Capstone.Web.DAL
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
             " park.parkName, park.state, park.yearFounded";
 
-        private string _GetAllWeatherReportsSQLString = "Select * from weather where parkCode = @parkCode";
+        private string _getAllWeatherReportsSQLString = "Select * from weather where parkCode = @parkCode";
+
+        private string _checkForSurveySQLString = "Select park.parkName, survey_result.emailAddress from park " +
+            "JOIN survey_result on park.parkCode = survey_result.parkCode " +
+            "WHERE park.parkName = @parkName AND survey_result.emailAddress = @emailAddress";
     }
 }

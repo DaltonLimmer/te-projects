@@ -1,40 +1,32 @@
 ﻿@using Capstone.Web.Models;
 @model List<NationalPark>
+
 <link href="~/Content/Style.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
-<!DOCTYPE html>
+<div class="container-fluid">
+    @foreach (NationalPark park in Model)
+    {
+        <div style="height: 400px; padding: 15px">
+            <img style="float: left; padding-right: 25px" src="~/Content/@(park.ParkCode).jpg" alt="Park Image" />
+            <table>
+                <tr>
+                    <td style="padding: 15px 0px 25px 0px; font-weight: bold"><a href="@Url.Action("Detail", "Home", new { parkCode = park.ParkCode })">@park.ParkName</a></td>
+                </tr>
+                <tr>
+                    @if (park.EntryFee != 0)
+                    {
+                        <td style="padding-bottom: 10px">Entry Fee: @park.EntryFee.ToString("C")</td>
+                    }
+                    else
+                    {
+                        <td style="padding-bottom: 10px">Entry Fee: Free!!</td>
+                    }
+                </tr>
+                <tr>
+                    <td>@park.ParkDescription.</td>
+                </tr>
+            </table>
+        </div>
+    }
+</div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div class="container-fluid">
-        @foreach (NationalPark park in Model)
-        {
-            <div class="container-fluid" style="height: 400px; padding: 15px; width: 100%">
-                <img style="float: left; padding-right: 25px" src="~/Content/@(park.ParkCode).jpg" alt="Park Image" />
-                <table>
-                    <tr>
-                        <td style="padding: 15px 0px 25px 0px; font-weight: bold"><a href="@Url.Action("Detail", "Home", new { parkCode = park.ParkCode })">@park.ParkName</a></td>
-                    </tr>
-                    <tr>
-                        @if (park.EntryFee != 0)
-                        {
-                            <td style="padding-bottom: 10px">Entry Fee: @park.EntryFee.ToString("C")</td>
-                        }
-                        else
-                        {
-                            <td style="padding-bottom: 10px">Entry Fee: Free!!</td>
-                        }
-                    </tr>
-                    <tr>
-                        <td>@park.ParkDescription.</td>
-                    </tr>
-                </table>
-            </div>
-        }
-    </div>
-</body>
-</html>
