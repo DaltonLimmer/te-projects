@@ -5,31 +5,27 @@
 {
     if (i % 2 != 0)
     {
-        <div class="oddSurveyDiv">
-                <img style="border-radius: 10px; width: 20%;" src="~/Content/@(Model[i].ParkCode).jpg" />
-                <table style="float:right; padding-right: 50%">
-                    <tr>
-                        <td>@Model[i].ParkName</td>
-                    </tr>
-                    <tr>
-                        <td>Total Surveys: @Model[i].TotalSurveys</td>
-                    </tr>
-                </table>
-        </div><br />
+        <div class="oddDiv">
+            <table style="background-color: lightcyan; width: 100%">
+                <tr>
+                    <td><img style="border-radius: 10px; width: 300px; float:left;" src="~/Content/@(Model[i].ParkCode).jpg" /></td>
+                    <td>@Model[i].ParkName has received @Model[i].TotalSurveys survey(s). Thank you for your input!</td>
+                </tr>
+                <tr>
+                    
+                </tr>
+            </table>
+        </div>
     }
-    
     else
     {
-        <div class="evenSurveyDiv">
-                <img style="border-radius: 10px; width: 20%" src="~/Content/@(Model[i].ParkCode).jpg" />
-                <table style="float:right; padding-right: 50%">
-                    <tr>
-                        <td>@Model[i].ParkName</td>
-                    </tr>
-                    <tr>
-                        <td>Total Surveys: @Model[i].TotalSurveys</td>
-                    </tr>
-                </table>
-        </div> <br />
+        <div class="evenDiv">
+            <table style="background-color: lightgrey; width: 100%">
+                <tr>
+                    <td><img style="border-radius: 10px; width: 300px; float:left" src="~/Content/@(Model[i].ParkCode).jpg" /></td>
+                   <td>@Model[i].ParkName has received @Model[i].TotalSurveys survey(s). Thank you for your input!</td>
+
+</table>
+        </div>
     }
 }

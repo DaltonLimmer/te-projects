@@ -126,20 +126,27 @@ namespace Capstone.Web.DAL
                 ParkCode = Convert.ToString(reader["parkCode"])
             };
         }
-        private WeatherReport MapRowToWeatherReport(SqlDataReader reader)
+
+        private WeatherReport MapRowToWeatherReport(SqlDataReader reader, string tempType)
         {
+            if(tempType == null)
+            {
+                tempType = "fahrenheit";
+            }
             return new WeatherReport
             {
+                isFahrenheit = (tempType == "fahrenheit"),
+
                 ParkCode = Convert.ToString(reader["parkCode"]),
                 FiveDayForecastValue = Convert.ToInt32(reader["fiveDayForecastValue"]),
-                High = Convert.ToInt32(reader["high"]),
-                Low = Convert.ToInt32(reader["low"]),
+                high = Convert.ToInt32(reader["high"]),
+                low = Convert.ToInt32(reader["low"]),
                 Forecast = Convert.ToString(reader["forecast"])
 
             };
         }
 
-        public List<WeatherReport> GetWeatherReports(string parkCode)
+        public List<WeatherReport> GetWeatherReports(string parkCode, string tempType)
         {
             List<WeatherReport> weatherReports = new List<WeatherReport>();
 
@@ -153,7 +160,7 @@ namespace Capstone.Web.DAL
 
                 while (reader.Read())
                 {
-                    weatherReports.Add(MapRowToWeatherReport(reader));
+                    weatherReports.Add(MapRowToWeatherReport(reader, tempType));
                 }
             }
 

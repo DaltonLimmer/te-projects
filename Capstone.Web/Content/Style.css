@@ -1,4 +1,8 @@
-﻿body {
+﻿a {
+    text-decoration: none;
+}
+
+body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -34,19 +38,32 @@ li {
     margin: 0 auto;
 }
 
-.oddSurveyDiv {
-    padding-top: 1px;
-    background-color: grey;
-    height: 160px;
-    display: inline-block;
+.evenDiv {
+    padding: 0px;
+    margin: 0px;
     width: 100%;
-    margin: -10px;
+    font-size: x-large;
+    background-color: lightgrey;
+    text-align: center;
 }
-.evenSurveyDiv {
-    margin: -10px;
-    padding-top: 1px;
+.oddDiv {
+    padding: 0px;
+    margin: 0px;
     width: 100%;
-    display: inline-block;
-    background-color: forestgreen;
-    height: 160px;
+    font-size: x-large;
+    background-color: lightcyan;
+    text-align: center;
+}
+
+.detailTable {
+    border-style: double;
+    border-width: 2px;
+    border: double;
+}
+
+.detailTable td {
+    height: 50px;
+    border-style: double;
+    border-width: 2px;
+    padding: 10px;
 }

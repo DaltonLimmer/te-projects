@@ -34,9 +34,21 @@ namespace Capstone.Web.Controllers
         }
 
 
-        public ActionResult Detail(string parkCode)
+        public ActionResult Detail(string parkCode, string tempType)
         {
-            List<WeatherReport> weatherReports = _dal.GetWeatherReports(parkCode);
+            if (parkCode == null)
+            {
+                parkCode = "ENP";
+            }
+
+            if (tempType == null)
+            {
+               tempType = Session["tempChoice"] as string;
+            }
+
+            Session["tempChoice"] = tempType;
+
+            List<WeatherReport> weatherReports = _dal.GetWeatherReports(parkCode, tempType);
             NationalPark park = _dal.GetOnePark(parkCode);
             DetailModel model = new DetailModel
             {
@@ -50,12 +62,26 @@ namespace Capstone.Web.Controllers
         public ActionResult Survey()
         {
             SurveyModel model = new SurveyModel();
-            return View(model);
+            return View("Survey", model);
         }
 
         [HttpPost]
         public ActionResult FavoriteParks(SurveyModel model)
         {
+            if(model.Email == null)
+            {
+                TempData["errorStringEmail"] = "You must enter an email address";
+                return View("Survey", model);
+            }
+           
+            if (Session["survey"] as string == model.ParkName)
+            {
+                TempData["errorString"] = "You cannot post more than one survey for this park";
+                return RedirectToAction("Survey");
+            }
+
+            Session["survey"] = model.ParkName;
+
             _dal.AddSurvey(model);
 
             List<SurveyPark> surveyParks = _dal.GetSurveyParks();
