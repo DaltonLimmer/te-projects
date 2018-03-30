@@ -56,6 +56,44 @@ namespace Capstone.Web.DAL
             return onePark;
         }
 
+        public void AddSurvey(SurveyModel survey)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(_addSurvey, conn);
+
+                cmd.Parameters.AddWithValue("@parkName", survey.ParkName);
+                cmd.Parameters.AddWithValue("@emailAddress", survey.Email);
+                cmd.Parameters.AddWithValue("@state", survey.StateOfResidence);
+                cmd.Parameters.AddWithValue("@activityLevel", survey.ActivityLevel);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public List<SurveyPark> GetSurveyParks()
+        {
+            List<SurveyPark> surveyParks = new List<SurveyPark>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(_getSurveyParks, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    surveyParks.Add(MapRowToParkSurvey(reader));
+                }
+            }
+
+            return surveyParks;
+        }
+
         private NationalPark MapRowToPark(SqlDataReader reader)
         {
             return new NationalPark
@@ -74,7 +112,18 @@ namespace Capstone.Web.DAL
                 InspirationalQuoteSource = Convert.ToString(reader["inspirationalQuoteSource"]),
                 ParkDescription = Convert.ToString(reader["parkDescription"]),
                 EntryFee = Convert.ToInt32(reader["entryFee"]),
-                NumberOfAnimalSpecies = Convert.ToInt32(reader["numberOfAnimalSpecies"])
+                NumberOfAnimalSpecies = Convert.ToInt32(reader["numberOfAnimalSpecies"]),
+            };
+        }
+
+    
+        private SurveyPark MapRowToParkSurvey(SqlDataReader reader)
+        {
+            return new SurveyPark
+            {
+                ParkName = Convert.ToString(reader["parkName"]),
+                TotalSurveys = Convert.ToInt32(reader["totalSurveys"]),
+                ParkCode = Convert.ToString(reader["parkCode"])
             };
         }
 
@@ -118,11 +167,20 @@ namespace Capstone.Web.DAL
             return weatherReports;
         }
 
+        private string _addSurvey = "Insert into survey_result(parkCode, emailAddress, state, activityLevel) " +
+            "VALUES((select park.parkCode from park where parkName = @parkName), @emailAddress, @state, @activityLevel)";
+
+        private string _getSurveyParks = "select park.parkName, park.parkCode, COUNT(park.parkName) as totalSurveys from park " +
+            "FULL OUTER JOIN survey_result on park.parkCode = survey_result.parkCode " +
+            "WHERE surveyId IS NOT NULL " +
+            "Group by park.parkName, park.parkCode " +
+            "Order by totalSurveys DESC, park.parkName ASC";
+
         private string _singleParkSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
             "park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode," +
-            " park.parkDescription, park.parkName, park.state, park.yearFounded, SUM(survey_result.surveyId)" +
-            " AS surveyCount from park FULL OUTER JOIN survey_result on park.parkCode = survey_result.parkCode" +
+            " park.parkDescription, park.parkName, park.state, park.yearFounded" +
+            " from park" +
             " WHERE park.parkCode = @parkCode Group by park.acreage, park.annualVisitorCount, park.climate," +
             " park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode, park.parkDescription," +
@@ -131,7 +189,7 @@ namespace Capstone.Web.DAL
         private string _GetAllParksSQLString = "Select park.acreage, park.annualVisitorCount, park.climate, " +
             "park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +
             " park.milesOfTrail, park.numberOfAnimalSpecies, park.numberOfCampsites, park.parkCode," +
-            " park.parkDescription, park.parkName, park.state, park.yearFounded, SUM(survey_result.surveyId)" +
+            " park.parkDescription, park.parkName, park.state, park.yearFounded, COUNT(survey_result.parkCode)" +
             " AS surveyCount from park FULL OUTER JOIN survey_result on park.parkCode = survey_result.parkCode" +
             " Group by park.acreage, park.annualVisitorCount, park.climate," +
             " park.elevationInFeet, park.entryFee, park.inspirationalQuote, park.inspirationalQuoteSource," +

@@ -21,7 +21,9 @@ namespace Capstone.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View("Index");
+            List<NationalPark> parks = _dal.GetAllParks();
+
+            return View("ParkList", parks);
         }
 
         public ActionResult ParkList()
@@ -36,8 +38,15 @@ namespace Capstone.Web.Controllers
         {
             if (parkCode == null)
             {
-                parkCode = (string)TempData["parkCode"];
+                parkCode = "ENP";
             }
+
+            if (tempType == null)
+            {
+               tempType = Session["tempChoice"] as string;
+            }
+
+            Session["tempChoice"] = tempType;
 
             List<WeatherReport> weatherReports = _dal.GetWeatherReports(parkCode, tempType);
             NationalPark park = _dal.GetOnePark(parkCode);
@@ -50,5 +59,42 @@ namespace Capstone.Web.Controllers
             return View("Detail", model);
         }
 
+        public ActionResult Survey()
+        {
+            SurveyModel model = new SurveyModel();
+            return View("Survey", model);
+        }
+
+        [HttpPost]
+        public ActionResult FavoriteParks(SurveyModel model)
+        {
+            if(model.Email == null)
+            {
+                TempData["errorStringEmail"] = "You must enter an email address";
+                return View("Survey", model);
+            }
+           
+            if (Session["survey"] as string == model.ParkName)
+            {
+                TempData["errorString"] = "You cannot post more than one survey for this park";
+                return RedirectToAction("Survey");
+            }
+
+            Session["survey"] = model.ParkName;
+
+            _dal.AddSurvey(model);
+
+            List<SurveyPark> surveyParks = _dal.GetSurveyParks();
+
+            TempData["surveys"] = surveyParks;
+
+            return RedirectToAction("FavoriteParks");
+        }
+
+        public ActionResult FavoriteParks()
+        {
+            List<SurveyPark> surveyParks = TempData["surveys"] as List<SurveyPark>;
+            return View("FavoriteParks", surveyParks);
+        }
     }
 }

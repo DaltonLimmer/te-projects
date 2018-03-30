@@ -142,6 +142,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SurveyModel.cs" />
+    <Compile Include="Models\SurveyPark.cs" />
     <Compile Include="Models\WeatherReport.cs" />
     <Compile Include="Models\DetailModel.cs" />
     <Compile Include="Models\NationalPark.cs" />
@@ -154,6 +156,8 @@
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Survey.cshtml" />
+    <Content Include="Views\Home\FavoriteParks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

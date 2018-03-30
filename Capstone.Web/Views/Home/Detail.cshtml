@@ -6,7 +6,7 @@
     TempData["parkCode"] = Model.NationalPark.ParkCode;
 }
 <div class="centerText">
-    <img style="border-radius: 25px;" src="~/Content/@(Model.NationalPark.ParkCode).jpg" />
+    <img style="border-radius: 25px; padding-top: 10px;" src="~/Content/@(Model.NationalPark.ParkCode).jpg" />
     <h1>@Model.NationalPark.ParkName</h1>
     @if (Model.NationalPark.EntryFee != 0)
     {
@@ -22,29 +22,21 @@
     </div>
     <p>@Model.NationalPark.ParkDescription</p>
 
-    <table align="center">
+    <table align="center" class="detailTable">
         <tr>
             <td>Year Founded: @Model.NationalPark.YearFounded</td>
-        </tr>
-        <tr>
             <td>Annual Visitor Count: @Model.NationalPark.AnnualVisitorCount people</td>
         </tr>
         <tr>
             <td>Climate: @Model.NationalPark.Climate</td>
-        </tr>
-        <tr>
             <td>Miles of Trail: @Model.NationalPark.MilesOfTrail miles</td>
         </tr>
         <tr>
             <td>Acreage: @Model.NationalPark.Acreage acres</td>
-        </tr>
-        <tr>
             <td>Number of Campsites: @Model.NationalPark.NumberOfCampsites</td>
         </tr>
         <tr>
             <td>Elevation: @Model.NationalPark.Elevation ft.</td>
-        </tr>
-        <tr>
             <td>Number of Animal Species: @Model.NationalPark.NumberOfAnimalSpecies</td>
         </tr>
     </table>
