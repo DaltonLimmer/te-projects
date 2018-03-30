@@ -68,19 +68,20 @@ namespace Capstone.Web.Controllers
         [HttpPost]
         public ActionResult FavoriteParks(SurveyModel model)
         {
-            if(model.Email == null)
+
+            if (model.Email == null)
             {
                 TempData["errorStringEmail"] = "You must enter an email address";
                 return View("Survey", model);
             }
-           
-            if (Session["survey"] as string == model.ParkName)
+
+            bool doesSurveyExist = _dal.CheckForSurvey(model);
+
+            if(doesSurveyExist == true)
             {
                 TempData["errorString"] = "You cannot post more than one survey for this park";
                 return RedirectToAction("Survey");
             }
-
-            Session["survey"] = model.ParkName;
 
             _dal.AddSurvey(model);
 

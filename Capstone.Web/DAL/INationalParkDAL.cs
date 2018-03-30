@@ -17,5 +17,7 @@ namespace Capstone.Web.DAL
         void AddSurvey(SurveyModel model);
 
         List<SurveyPark> GetSurveyParks();
+
+        bool CheckForSurvey(SurveyModel survey);
     }
 }

@@ -18,25 +18,25 @@
     }
     <div align="center" id="quoteBlock">
         <p>"@Model.NationalPark.InspirationalQuote"</p>
-        <p>-@Model.NationalPark.InspirationalQuoteSource</p>
+        <p style="font-style: italic">-@Model.NationalPark.InspirationalQuoteSource</p>
     </div>
     <p>@Model.NationalPark.ParkDescription</p>
 
     <table align="center" class="detailTable">
         <tr>
             <td>Year Founded: @Model.NationalPark.YearFounded</td>
-            <td>Annual Visitor Count: @Model.NationalPark.AnnualVisitorCount people</td>
+            <td>Annual Visitor Count: @(string.Format("{0:n0}",(Model.NationalPark.AnnualVisitorCount))) people</td>
         </tr>
         <tr>
             <td>Climate: @Model.NationalPark.Climate</td>
-            <td>Miles of Trail: @Model.NationalPark.MilesOfTrail miles</td>
+            <td>Miles of Trail: @(string.Format("{0:n}",(Model.NationalPark.MilesOfTrail))) miles</td>
         </tr>
         <tr>
-            <td>Acreage: @Model.NationalPark.Acreage acres</td>
+            <td>Acreage: @(string.Format("{0:n}",(Model.NationalPark.Acreage))) acres</td>
             <td>Number of Campsites: @Model.NationalPark.NumberOfCampsites</td>
         </tr>
         <tr>
-            <td>Elevation: @Model.NationalPark.Elevation ft.</td>
+            <td>Elevation: @(string.Format("{0:n}", (Model.NationalPark.Elevation))) ft.</td>
             <td>Number of Animal Species: @Model.NationalPark.NumberOfAnimalSpecies</td>
         </tr>
     </table>
