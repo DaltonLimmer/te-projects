@@ -1,39 +1,82 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/Content/Style.css" rel="stylesheet" />
-</head>
-<body>
-    <div style="width: 100%; background-color: lightgrey;">
-<<<<<<< HEAD
-        <header>
-            <div style="display: inline-block">
-                <img style="float: left; width: 20%" src="~/Content/logo.png" alt="Alternate Text" />
-                <h1 style="text-align: center">Park Service</h1>
+﻿@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="~/Content/Style.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-grid.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-reboot.css" rel="stylesheet" />
+    </head>
+    <body>
+        @*<header>
+                <div style="display: inline-block">
+                    <img style="float: left; width: 20%" src="~/Content/logo.png" alt="Alternate Text" />
+                    <h1 style="text-align: center">Park Service</h1>
+                </div>
+            </header>
+            <nav class="navbar navbar-dark">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">WebSiteName</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("List of Parks", "ParkList")</li>
+                        <li>@Html.ActionLink("Take the Park Survey", "Survey")</li>
+                    </ul>
+                </div>
+            </nav>*@
+@*<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
             </div>
-        </header>
-        <nav style="background-color: darkturquoise; width: 100%; height: 40px;">
-            <span style="padding-right: 20px">@Html.ActionLink("ParkList", "ParkList")</span> @Html.ActionLink("Survey", "Survey")
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Page 1</a></li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul>
+        </div>
+    </nav>*@
+
+@*@RenderBody()*@
+
+
+@*</body>
+
+    </html>*@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Park Service</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+        <nav style="min-height:100px; max-height:100px" class="navbar navbar-expand-md navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img style="float: left; width: 25%" src="~/Content/logo.png" alt="Alternate Text" />
+                    <h1 class="navbar-text">Park Service</h1>
+                </div>
+                <ul class="navbar-collapse collapse navbar-nav">
+                    <li style="padding: 25px"><a href="#">Home</a></li>
+                    <li style="padding: 25px"><a href="#">List of Parks</a></li>
+                    <li style="padding: 25px"><a href="#">Page 2</a></li>
+                    <li style="padding: 25px"><a href="#">Page 3</a></li>
+                </ul>
+            </div>
         </nav>
-    </div>
-=======
-    <header>
-        <div style="display: inline-block">
-        <img style="float: left; width: 20%" src="~/Content/logo.png" alt="Alternate Text" />
-            <h1 style="text-align: center">Park Service</h1>
+
+        <div class="container">
+            @RenderBody()
         </div>
-    </header>
-    <nav style="background-color: darkturquoise; width: 100%; height: 40px;">
-           <span style="padding: 20px; padding-right: 20px">@Html.ActionLink("List of Parks", "ParkList")</span> @Html.ActionLink("Take the Park Survey", "Survey")
-    </nav>
-        </div>
->>>>>>> 4a18101b7eaca77efcc5d5af980439de768de6d8
 
-    @RenderBody()
-
-
-</body>
-
+    </body>
 </html>
