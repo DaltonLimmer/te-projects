@@ -71,3 +71,12 @@ li {
 td, p {
     font-size: 14px;
 }
+
+.parkListTables {
+    height: 365px;
+    background-color: lightgrey;
+    border-color: grey;
+    border-radius: 25px;
+    margin: 30px;
+    padding: 15px;
+}

@@ -9,6 +9,7 @@
 <link href="~/Content/Style.css" rel="stylesheet" />
 <div class="centerText container-fluid">
     <img style="border-radius: 25px; padding-top: 10px;" src="~/Content/@(Model.NationalPark.ParkCode).jpg" />
+    <br />
     <h1>@Model.NationalPark.ParkName</h1>
     @if (Model.NationalPark.EntryFee != 0)
     {
@@ -21,8 +22,8 @@
     <div align="center" id="quoteBlock">
         <p>"@Model.NationalPark.InspirationalQuote"</p>
         <p style="font-style: italic">-@Model.NationalPark.InspirationalQuoteSource</p>
-    </div>
-    <p>@Model.NationalPark.ParkDescription</p>
+    </div><br />
+    <p>@Model.NationalPark.ParkDescription.</p>
 
     <table align="center" class="detailTable">
         <tr>

@@ -3,11 +3,14 @@
 
 <link href="~/Content/Style.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<style>
+
+</style>
 <div class="container-fluid">
     @foreach (NationalPark park in Model)
     {
-        <div style="height: 400px; padding: 15px">
-            <img style="float: left; padding-right: 25px" src="~/Content/@(park.ParkCode).jpg" alt="Park Image" />
+        <div class="parkListTables">
+            <img style="float: left; padding-right: 25px;" src="~/Content/@(park.ParkCode).jpg" alt="Park Image" />
             <table>
                 <tr>
                     <td style="padding: 15px 0px 25px 0px; font-weight: bold"><a href="@Url.Action("Detail", "Home", new { parkCode = park.ParkCode })">@park.ParkName</a></td>
