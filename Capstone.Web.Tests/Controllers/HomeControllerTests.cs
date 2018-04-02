@@ -15,14 +15,15 @@
 //        [TestMethod()]
 //        public void HomeController_IndexAction_ReturnIndexView()
 //        {
+
 //            //Arrange
-//            //HomeController controller = new HomeController();
+//            HomeController controller = new HomeController();
 
 //            //Act
-//            //ViewResult result = controller.Index() as ViewResult;
+//            ViewResult result = controller.Index() as ViewResult;
 
 //            //Assert
-//            //Assert.AreEqual("Index", result.ViewName);
+//            Assert.AreEqual("Index", result.ViewName);
 //        }
 //    }
 //}

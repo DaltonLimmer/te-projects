@@ -18,6 +18,7 @@ namespace Capstone.Web.Controllers
             _dal = dal;
         }
 
+
         // GET: Home
         public ActionResult Index()
         {
