@@ -69,6 +69,7 @@ namespace Capstone.Web.Controllers
         [HttpPost]
         public ActionResult FavoriteParks(SurveyModel model)
         {
+           
 
             if (model.Email == null)
             {
@@ -86,16 +87,13 @@ namespace Capstone.Web.Controllers
 
             _dal.AddSurvey(model);
 
-            List<SurveyPark> surveyParks = _dal.GetSurveyParks();
-
-            TempData["surveys"] = surveyParks;
-
             return RedirectToAction("FavoriteParks");
         }
 
         public ActionResult FavoriteParks()
         {
-            List<SurveyPark> surveyParks = TempData["surveys"] as List<SurveyPark>;
+
+            List<SurveyPark> surveyParks = _dal.GetSurveyParks();
             return View("FavoriteParks", surveyParks);
         }
     }

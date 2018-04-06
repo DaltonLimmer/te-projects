@@ -4,16 +4,18 @@
 <link href="~/Content/Style.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <style>
-
+    td {
+        padding-left: 25px
+    }
 </style>
 <div class="container-fluid">
     @foreach (NationalPark park in Model)
     {
         <div class="parkListTables">
-            <img style="float: left; padding-right: 25px;" src="~/Content/@(park.ParkCode).jpg" alt="Park Image" />
+            <img style="float: left; border-radius: inherit" src="~/Content/@(park.ParkCode).jpg" alt="Park Image" />
             <table>
                 <tr>
-                    <td style="padding: 15px 0px 25px 0px; font-weight: bold"><a href="@Url.Action("Detail", "Home", new { parkCode = park.ParkCode })">@park.ParkName</a></td>
+                    <td style="padding: 15px 0px 25px 25px; font-weight: bold"><a href="@Url.Action("Detail", "Home", new { parkCode = park.ParkCode })">@park.ParkName</a></td>
                 </tr>
                 <tr>
                     @if (park.EntryFee != 0)
@@ -26,7 +28,7 @@
                     }
                 </tr>
                 <tr>
-                    <td>@park.ParkDescription.</td>
+                    <td>@park.ParkDescription</td>
                 </tr>
             </table>
         </div>

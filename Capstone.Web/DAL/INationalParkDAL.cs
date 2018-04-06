@@ -14,7 +14,7 @@ namespace Capstone.Web.DAL
 
         List<WeatherReport> GetWeatherReports(string parkCode, string tempType);
 
-        void AddSurvey(SurveyModel model);
+        bool AddSurvey(SurveyModel model);
 
         List<SurveyPark> GetSurveyParks();
 

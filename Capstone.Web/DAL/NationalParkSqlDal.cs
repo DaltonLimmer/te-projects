@@ -80,8 +80,9 @@ namespace Capstone.Web.DAL
             }
         }
 
-        public void AddSurvey(SurveyModel survey)
+        public bool AddSurvey(SurveyModel survey)
         {
+            bool surveyPost = false;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -93,8 +94,12 @@ namespace Capstone.Web.DAL
                 cmd.Parameters.AddWithValue("@state", survey.StateOfResidence);
                 cmd.Parameters.AddWithValue("@activityLevel", survey.ActivityLevel);
 
-                cmd.ExecuteNonQuery();
+                if(cmd.ExecuteNonQuery() > 0)
+                {
+                    surveyPost = true;
+                }
             }
+            return surveyPost;
         }
 
         public List<SurveyPark> GetSurveyParks()
@@ -190,6 +195,7 @@ namespace Capstone.Web.DAL
 
             return weatherReports;
         }
+
 
         private string _addSurvey = "Insert into survey_result(parkCode, emailAddress, state, activityLevel) " +
             "VALUES((select park.parkCode from park where parkName = @parkName), @emailAddress, @state, @activityLevel)";

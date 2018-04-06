@@ -45,6 +45,24 @@ namespace Capstone.Web.Tests.DAL
                 }
             }
 
+            [TestMethod()]
+            public void PostOneSurvey()
+            {
+                NationalParkSqlDal nationalParkDAL = new NationalParkSqlDal(connectionString);
+
+                SurveyModel surveyTest = new SurveyModel
+                {
+                    Email = "test@test.com",
+                    ActivityLevel = "sedentary",
+                    ParkName = "Grand Teton National Park",
+                    StateOfResidence = "Ohio"
+                };
+
+                bool testPass = nationalParkDAL.AddSurvey(surveyTest);
+
+                Assert.AreEqual(true, testPass);
+            }
+
 
             [TestMethod()]
             public void GetAllParksTest()
